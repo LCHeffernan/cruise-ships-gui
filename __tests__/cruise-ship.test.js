@@ -5,6 +5,7 @@ describe("Ship", () => {
     let ship;
     let itinerary;
     let port;
+
     beforeEach(() => {
       port = {
         name: "Dover",
@@ -15,6 +16,7 @@ describe("Ship", () => {
       itinerary = { ports: [port] };
       ship = new Ship(itinerary);
     });
+
     it("returns an object", () => {
       expect(ship).toBeInstanceOf(Object);
     });
@@ -30,6 +32,7 @@ describe("Ship", () => {
     it("Ship gets added to Port property ships on instantiation", () => {
       expect(port.addShip).toHaveBeenCalled();
     });
+
   });
 });
 
@@ -39,6 +42,7 @@ describe("Ship methods", () => {
     let calais;
     let itinerary;
     let ship;
+
     beforeEach(() => {
       dover = {
         name: "Dover",
@@ -55,6 +59,7 @@ describe("Ship methods", () => {
       itinerary = { ports: [dover, calais] };
       ship = new Ship(itinerary);
     });
+    
     it("has a method called set sail", () => {
       expect(ship.setSail).toBeInstanceOf(Function);
     });

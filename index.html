@@ -1,74 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cruise Ships</title>
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/style.css"> 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cruise Ships</title>
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
+
 <body>
-    <form>
-        <label>Add port</label><br><br>
-        <input type="text" id="newPortName" placeholder="port name"><br><br>
-        <input type="submit" id="addPort" value="add">
-        <input type="submit" id="noMorePorts" value="done">
-        <input type="submit" id="reloadPage" value="reset">
-    </form>
-    <div id="headsUpBoard">Itinerary:</div>
-    <div id="mainContainer">
-        <div id="viewport">
-            <div id="ports"></div>
-            <div id="portNames"></div>
-            <div id="ship"></div>
-        </div>
-        <button id="sailbutton">set sail!</buttton>
+  <form>
+    <label>Add port</label><br><br>
+    <input type="text" id="newPortName" placeholder="port name"><br><br>
+    <input type="submit" id="addPort" value="add">
+    <input type="submit" id="noMorePorts" value="done">
+    <input type="submit" id="reloadPage" value="reset">
+  </form>
+  <div id="headsUpBoard">Itinerary:</div>
+  <div id="mainContainer">
+    <div id="viewport">
+      <div id="ports"></div>
+      <div id="portNames"></div>
+      <div id="ship"></div>
     </div>
-        <script src="./src/Controller.js"></script>
-        <script src="./src/port.js"></script>
-        <script src="./src/cruise-ship.js"></script>
-        <script src="./src/itinerary.js"></script>
-        <script>
-            const itinerary = new Itinerary([]);
-            const addPortButton = document.querySelector('#addPort');
-            addPortButton.addEventListener("click", function(event) { 
-                const newPort = document.querySelector('#newPortName');
-                const headsUpBoard = document.querySelector('#headsUpBoard');
-                if(newPort.value){
-                const port = new Port(newPort.value);
-                itinerary.ports.push(port);
-                newPort.value = '';
-                headsUpBoard.innerHTML += `
+    <button id="sailbutton">set sail!</buttton>
+  </div>
+  <script src="./src/Controller.js"></script>
+  <script src="./src/port.js"></script>
+  <script src="./src/cruise-ship.js"></script>
+  <script src="./src/itinerary.js"></script>
+  <script>
+    const itinerary = new Itinerary([]);
+    const addPortButton = document.querySelector('#addPort');
+    addPortButton.addEventListener("click", function (event) {
+      const newPort = document.querySelector('#newPortName');
+      const headsUpBoard = document.querySelector('#headsUpBoard');
+      if (newPort.value) {
+        const port = new Port(newPort.value);
+        itinerary.ports.push(port);
+        newPort.value = '';
+        headsUpBoard.innerHTML += `
 ${port.name}`;
-                
-            } else {
-                alert('You must enter a port name');
-            }
-                event.preventDefault();
-            }, false);
 
-            const noMorePortsButton = document.querySelector('#noMorePorts');
-            noMorePortsButton.addEventListener("click", function(event) { 
-                if(itinerary.ports.length<2){
-                    alert('you must add a minimum of 2 ports');
-                } else {
-                const ship = new Ship(itinerary);
-                const controller = new Controller(ship); 
-                controller.renderPorts(itinerary.ports);
-                controller.renderShip();
-                const addPortButton = document.querySelector('#addPort');
-                addPortButton.disabled = true;
-                noMorePortsButton.disabled = true;
-                }
-                event.preventDefault();
-            }, false);
+      } else {
+        alert('You must enter a port name');
+      }
+      event.preventDefault();
+    }, false);
 
-            const reloadPageButton = document.querySelector('#reloadPage');
-            reloadPageButton.addEventListener('click', () => {location.reload();});
-        </script>    
+    const noMorePortsButton = document.querySelector('#noMorePorts');
+    noMorePortsButton.addEventListener("click", function (event) {
+    if (itinerary.ports.length < 2) {
+      alert('you must add a minimum of 2 ports');
+    } else {
+      const ship = new Ship(itinerary);
+      const controller = new Controller(ship);
+      controller.renderPorts(itinerary.ports);
+      controller.renderShip();
+      const addPortButton = document.querySelector('#addPort');
+      addPortButton.disabled = true;
+      noMorePortsButton.disabled = true;
+    }
+    event.preventDefault();
+    }, false);
+
+    const reloadPageButton = document.querySelector('#reloadPage');
+    reloadPageButton.addEventListener('click', () => { location.reload(); });
+  </script>
 </body>
+
 </html>

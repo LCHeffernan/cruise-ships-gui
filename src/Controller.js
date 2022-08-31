@@ -7,15 +7,16 @@
 
       this.headsUpMessageBoard();
 
-      const sailButton = document.querySelector("#sailbutton");
-      sailButton.addEventListener("click", () => {
-        if (document.querySelector("#sailbutton").disabled) {
-          console.log("button disabled");
+      const sailButton = document.querySelector('#sailbutton');
+      sailButton.addEventListener('click', () => {
+        if (document.querySelector('#sailbutton').disabled) {
+          console.log('button disabled');
         } else {
           this.setSail();
         }
       });
     }
+
     get messageCurrentPort() {
       return this.ship.currentPort.name;
     }
@@ -28,7 +29,7 @@
       if (!this.endOfItinerary) {
         nextPort = ship.itinerary.ports[indexOfNextPort].name;
       } else {
-        nextPort = "End of cruise";
+        nextPort = 'End of cruise';
       }
       return nextPort;
     }
@@ -40,8 +41,8 @@
     }
 
     initialiseSea() {
-      const backgrounds = ["../images/water0.png", "../images/water1.png"];
-      let waterImage = document.querySelector("#viewport");
+      const backgrounds = ['./images/water0.png', './images/water1.png'];
+      let waterImage = document.querySelector('#viewport');
       let counter = 0;
       window.setInterval(() => {
         waterImage.style.backgroundImage = `url('${
@@ -50,22 +51,23 @@
         counter++;
       }, 1000);
     }
+
     renderPorts(ports) {
-      let portsElement = document.querySelector("#ports");
-      let portNameElement = document.querySelector("#portNames");
-      portsElement.style.width = "0px";
-      portNameElement.style.width = "0px";
+      let portsElement = document.querySelector('#ports');
+      let portNameElement = document.querySelector('#portNames');
+      portsElement.style.width = '0px';
+      portNameElement.style.width = '0px';
       ports.forEach((port, index) => {
-        const newPortElement = document.createElement("div");
-        const newPortNameElement = document.createElement("div");
+        const newPortElement = document.createElement('div');
+        const newPortNameElement = document.createElement('div');
 
         newPortElement.dataset.portName = port.name;
         newPortElement.dataset.portIndex = index;
-        newPortElement.className = "port";
+        newPortElement.className = 'port';
 
         newPortNameElement.dataset.portName = port.name;
         newPortNameElement.dataset.portIndex = index;
-        newPortNameElement.className = "portName";
+        newPortNameElement.className = 'portName';
         newPortNameElement.innerHTML = `${port.name}`;
 
         portsElement.appendChild(newPortElement);
@@ -77,17 +79,19 @@
         portNameElement.style.width = `${portNameElementWidth + 256}px`;
       });
     }
+
     renderShip() {
       const ship = this.ship;
       const indexOfCurrentPort = ship.itinerary.ports.indexOf(ship.currentPort);
       const currentPortElement = document.querySelector(
         `[data-port-index="${indexOfCurrentPort}"]`
       );
-      const shipElement = document.querySelector("#ship");
-      shipElement.style.visibility = "visible";
+      const shipElement = document.querySelector('#ship');
+      shipElement.style.visibility = 'visible';
       shipElement.style.top = `${currentPortElement.offsetTop + 15}px`;
       shipElement.style.left = `${currentPortElement.offsetLeft - 8}px`;
     }
+
     setSail() {
       const ship = this.ship;
       const indexOfNextPort =
@@ -95,8 +99,8 @@
       const nextPortElement = document.querySelector(
         `[data-port-index="${indexOfNextPort}"]`
       );
-      const sailButton = document.querySelector("#sailbutton");
-      sailButton.innerHTML = "Enjoy the journey";
+      const sailButton = document.querySelector('#sailbutton');
+      sailButton.innerHTML = 'Enjoy the journey';
       sailButton.disabled = true;
       this.headsUpMessageBoard();
       if (this.endOfItinerary) {
@@ -105,7 +109,7 @@
         this.renderMessage(
           `We have now departed from ${ship.currentPort.name}`
         );
-        const shipElement = document.querySelector("#ship");
+        const shipElement = document.querySelector('#ship');
         const end = parseInt(nextPortElement.offsetLeft, 10);
         let sailInterval = null;
         sailInterval = setInterval(() => {
@@ -115,7 +119,7 @@
             ship.dock();
             this.renderMessage(`We have arrived at ${ship.currentPort.name}`);
             this.headsUpMessageBoard();
-            sailButton.innerHTML = "Sail to next port";
+            sailButton.innerHTML = 'Sail to next port';
             sailButton.disabled = false;
             clearInterval(sailInterval);
           } else {
@@ -124,12 +128,13 @@
         }, 20);
       }
     }
+
     renderMessage(message) {
-      const siblingElement = document.querySelector("#sailbutton");
-      const parentElement = document.querySelector("#sailbutton").parentNode;
-      const newMessageElement = document.createElement("div");
-      siblingElement.style.display = "none";
-      newMessageElement.id = "message";
+      const siblingElement = document.querySelector('#sailbutton');
+      const parentElement = document.querySelector('#sailbutton').parentNode;
+      const newMessageElement = document.createElement('div');
+      siblingElement.style.display = 'none';
+      newMessageElement.id = 'message';
       if (this.endOfItinerary) {
         newMessageElement.innerHTML = `${message}, this is our final port.`;
       } else {
@@ -139,17 +144,18 @@
       if (!this.endOfItinerary) {
         setTimeout(() => {
           newMessageElement.remove();
-          siblingElement.style.display = "";
+          siblingElement.style.display = '';
         }, 2000);
       }
     }
+    
     headsUpMessageBoard() {
-      const headsUpElement = document.querySelector("#headsUpBoard");
+      const headsUpElement = document.querySelector('#headsUpBoard');
       headsUpElement.innerHTML = `Current port: ${this.messageCurrentPort}
 Next port: ${this.messageNextPort}`;
     }
   }
-  if (typeof module !== "undefined" && module.exports) {
+  if (typeof module !== 'undefined' && module.exports) {
     module.exports = Controller;
   } else {
     window.Controller = Controller;
